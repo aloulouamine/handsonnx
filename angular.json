@@ -2,13 +2,133 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "",
-  "projects": {},
+  "projects": {
+    "mainapp": {
+      "root": "apps/mainapp/",
+      "sourceRoot": "apps/mainapp/src",
+      "projectType": "application",
+      "prefix": "handsonnx",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/mainapp",
+            "index": "apps/mainapp/src/index.html",
+            "main": "apps/mainapp/src/main.ts",
+            "polyfills": "apps/mainapp/src/polyfills.ts",
+            "tsConfig": "apps/mainapp/tsconfig.app.json",
+            "assets": [
+              "apps/mainapp/src/favicon.ico",
+              "apps/mainapp/src/assets"
+            ],
+            "styles": [
+              "apps/mainapp/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/mainapp/src/environments/environment.ts",
+                  "with": "apps/mainapp/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "mainapp:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "mainapp:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "mainapp:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "apps/mainapp/src/test.ts",
+            "polyfills": "apps/mainapp/src/polyfills.ts",
+            "tsConfig": "apps/mainapp/tsconfig.spec.json",
+            "karmaConfig": "apps/mainapp/karma.conf.js",
+            "styles": [
+              "apps/mainapp/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "apps/mainapp/src/favicon.ico",
+              "apps/mainapp/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/mainapp/tsconfig.app.json",
+              "apps/mainapp/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "mainapp-e2e": {
+      "root": "apps/mainapp-e2e/",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/mainapp-e2e/protractor.conf.js",
+            "devServerTarget": "mainapp:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "mainapp:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/mainapp-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
   "cli": {
     "warnings": {
       "typescriptMismatch": false,
       "versionMismatch": false
     },
     "defaultCollection": "@nrwl/schematics"
-    
-  }
+  },
+  "defaultProject": "mainapp"
 }
