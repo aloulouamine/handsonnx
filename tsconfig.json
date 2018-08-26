@@ -16,6 +16,9 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "@handsonnx/components": [
+        "libs/components/src/index.ts"
+      ]
     }
   },
   "exclude": [
